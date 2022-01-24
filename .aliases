@@ -1,0 +1,19 @@
+shconfig () {                                                               
+        vim ~/.zshrc && source ~/.zshrc                                      
+}                                                                            
+alias ohmyzsh="vim ~/.oh-my-zsh"                                             
+alias cd..="cd .."                                                           
+alias vimrc="vim ~/.vimrc"                                                   
+alias py="python3"                                                           
+alias pip="pip.exe"                                                          
+alias expl="explorer.exe ."                                                  
+alias ipy="ipython3.exe"                                                     
+alias bat="batcat"                                                           
+exp () {                                                                     
+        cd "$PWD" && explorer.exe .                                          
+}                                                                            
+mcdir () {                                                                   
+        mkdir -p "$1" && cd "$1"                                             
+}                                                                            
+cd                                                                           
+  
