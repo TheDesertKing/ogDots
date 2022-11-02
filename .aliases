@@ -1,0 +1,33 @@
+# copied aliases
+
+# from kali:
+
+alias grep='grep --color=auto'                                           
+alias fgrep='fgrep --color=auto'                                         
+alias egrep='egrep --color=auto'                                         
+alias diff='diff --color=auto'                                           
+alias ip='ip --color=auto'   
+alias ll='ls -l'                                                             
+alias la='ls -A'                                                             
+alias l='ls -CF'  
+
+# original aliases
+shconfig () {                                                               
+        vim ~/.zshrc && source ~/.zshrc                                      
+}                                                                            
+alias ohmyzsh="vim ~/.oh-my-zsh"                                             
+alias cd..="cd .."                                                           
+alias vimrc="vim ~/.vimrc"                                                   
+alias py="python3"                                                           
+alias pip="pip.exe"                                                          
+alias expl="explorer.exe ."                                                  
+alias ipy="ipython3.exe"                                                     
+alias bat="batcat"                                                           
+exp () {                                                                     
+        cd "$PWD" && explorer.exe .                                          
+}                                                                            
+mcdir () {                                                                   
+        mkdir -p "$1" && cd "$1"                                             
+}                                                                            
+cd                                                                           
+  
