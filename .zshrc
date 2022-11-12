@@ -15,7 +15,7 @@ export ZSH="/home/amitz/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="jonathan" # set by `omz`
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -115,15 +115,29 @@ alias pip="pip.exe"
 alias expl="explorer.exe ."
 alias ipy="ipython3.exe"
 alias bat="batcat"
-exp () {
-	cd "$PWD" && explorer.exe .
-}
+alias la="ls -A"
+alias ip="ip -c=auto"
+alias tmux="TERM=xterm-256color tmux"
 mcdir () {
 	mkdir -p "$1" && cd "$1"
 }
+# nvim
+#alias vim="nvim"
 cd
 
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# wsl only
+alias getGitAuth="cat ~/GitAuthToken | clip.exe"
+exp () {
+	cd "$PWD" && explorer.exe .
+}
+
+# wsl open new tab in current dir
+keep_current_path() {
+  printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"
+}
+precmd_functions+=(keep_current_path)
