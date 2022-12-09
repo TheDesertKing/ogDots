@@ -118,11 +118,13 @@ alias bat="batcat"
 alias la="ls -A"
 alias ip="ip -c=auto"
 alias tmux="TERM=xterm-256color tmux"
-#wsl only
+
+# wsl only
 alias getGitAuth="cat ~/GitAuthToken | clip.exe"
 exp () {
 	cd "$PWD" && explorer.exe .
 }
+
 mcdir () {
 	mkdir -p "$1" && cd "$1"
 }
@@ -134,3 +136,4 @@ cd
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
