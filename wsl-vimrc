@@ -21,7 +21,7 @@ set smartcase
 set ignorecase
 set hidden
 set number
-set tabstop=2
+set tabstop=4
 set shiftwidth=4
 set splitbelow
 set splitright
@@ -64,36 +64,61 @@ Plug 'erietz/vim-terminator', { 'branch': 'main'}
 
 " THEMES~!
 Plug 'ghifarit53/tokyonight-vim'
-"let g:airline_theme = 'tokyonight'
-""Plug 'NLKNguyen/papercolor-theme'
-"Plug 'haishanh/night-owl.vim'
+let g:airline_theme = 'tokyonight'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'haishanh/night-owl.vim'
 Plug 'Rigellute/shades-of-purple.vim'
+Plug 'rafalbromirski/vim-aurora'
+Plug 'tomasr/molokai'
+Plug 'fmoralesc/molokayo'
+Plug 'ajmwagar/vim-deus'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'rust-lang/rust.vim'
 
 
 if (has('termguicolors'))
    set termguicolors
 endif
-
 " Initialize plugin system
 call plug#end()
 
 
+let my_colorschemes = ['tokyonight', 'molokai', 'molokayo', 'night-owl', 'shades_of_purple', 'aurora', 'challenger-deep', 'deus']
+execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1 ) ]
 
 syntax enable
+filetype plugin indent on
 "let g:tokyonight_style = 'storm'
 "let g:tokyonight_enable_italic = 1
 "colorscheme tokyonight
-colorscheme shades_of_purple
-let g:shades_of_purple_airline = 1
-let g:airline_theme='shades_of_purple'
+"colorscheme shades_of_purple
+"let g:shades_of_purple_airline = 1
+"let g:airline_theme='shades_of_purple'
+"colorscheme aurora
 
 
+"run and pipe output to less
 autocmd FileType python map <buffer> <F3> :w<CR>:exec '!clear; python3 % \| less'<CR>
 autocmd FileType python imap <buffer> <F3> <esc>:w<CR>:exec '!clear; python3 % \| less'<CR>
+"run
 autocmd FileType python map <buffer> <F2> :w<CR>:exec '!clear; python3 %'<CR>
 autocmd FileType python imap <buffer> <F2> <esc>:w<CR>:exec '!clear; python3 %'<CR>
+"compile and run
 autocmd FileType c map <buffer> <F2> :w<CR>:exec '!clear; gcc % -o %:r; ./%:r'<CR>
 autocmd FileType c imap <buffer> <F2> <esc>:w<CR>:exec '!clear; gcc % -o %:r; ./%:r'<CR>
+"compile, run and pipe output to less
+autocmd FileType c map <buffer> <F2> :w<CR>:exec '!clear; gcc % -o %:r; ./%:r \| less'<CR>
+autocmd FileType c imap <buffer> <F2> <esc>:w<CR>:exec '!clear; gcc % -o %:r; ./%:r \| less'<CR>
+"compile only
+autocmd FileType c map <buffer> <F2> :w<CR>:exec '!clear; gcc % -o %:r'<CR>
+autocmd FileType c imap <buffer> <F2> <esc>:w<CR>:exec '!clear; gcc % -o %:r'<CR>
+"compile and run
+autocmd FileType rust map <buffer> <F2> :w<CR>:exec '!clear; rustc % -o %:r; ./%:r'<CR>
+autocmd FileType rust imap <buffer> <F2> <esc>:w<CR>:exec '!clear; rustc % -o %:r; ./%:r'<CR>
+"cat source code
+autocmd FileType * map <buffer> <F4> :w<CR>:exec '!clear;cat %'<CR>
+autocmd FileType * imap <buffer> <F4> <esc>:w<CR>:exec '!clear;cat %'<CR>
+
 
 " Vim Terminator
 let g:terminator_runfile_map = {
