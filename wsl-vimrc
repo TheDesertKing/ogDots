@@ -97,21 +97,21 @@ filetype plugin indent on
 "colorscheme aurora
 
 
-"run and pipe output to less
-autocmd FileType python map <buffer> <F3> :w<CR>:exec '!clear; python3 % \| less'<CR>
-autocmd FileType python imap <buffer> <F3> <esc>:w<CR>:exec '!clear; python3 % \| less'<CR>
 "run
 autocmd FileType python map <buffer> <F2> :w<CR>:exec '!clear; python3 %'<CR>
 autocmd FileType python imap <buffer> <F2> <esc>:w<CR>:exec '!clear; python3 %'<CR>
+"run and pipe output to less
+autocmd FileType python map <buffer> <F3> :w<CR>:exec '!clear; python3 % \| less'<CR>
+autocmd FileType python imap <buffer> <F3> <esc>:w<CR>:exec '!clear; python3 % \| less'<CR>
 "compile and run
 autocmd FileType c map <buffer> <F2> :w<CR>:exec '!clear; gcc % -o %:r; ./%:r'<CR>
 autocmd FileType c imap <buffer> <F2> <esc>:w<CR>:exec '!clear; gcc % -o %:r; ./%:r'<CR>
 "compile, run and pipe output to less
-autocmd FileType c map <buffer> <F2> :w<CR>:exec '!clear; gcc % -o %:r; ./%:r \| less'<CR>
-autocmd FileType c imap <buffer> <F2> <esc>:w<CR>:exec '!clear; gcc % -o %:r; ./%:r \| less'<CR>
+autocmd FileType c map <buffer> <F3> :w<CR>:exec '!clear; gcc % -o %:r; ./%:r \| less'<CR>
+autocmd FileType c imap <buffer> <F3> <esc>:w<CR>:exec '!clear; gcc % -o %:r; ./%:r \| less'<CR>
 "compile only
-autocmd FileType c map <buffer> <F2> :w<CR>:exec '!clear; gcc % -o %:r'<CR>
-autocmd FileType c imap <buffer> <F2> <esc>:w<CR>:exec '!clear; gcc % -o %:r'<CR>
+autocmd FileType c map <buffer> <F5> :w<CR>:exec '!clear; gcc % -o %:r'<CR>
+autocmd FileType c imap <buffer> <F5> <esc>:w<CR>:exec '!clear; gcc % -o %:r'<CR>
 "compile and run
 autocmd FileType rust map <buffer> <F2> :w<CR>:exec '!clear; rustc % -o %:r; ./%:r'<CR>
 autocmd FileType rust imap <buffer> <F2> <esc>:w<CR>:exec '!clear; rustc % -o %:r; ./%:r'<CR>
