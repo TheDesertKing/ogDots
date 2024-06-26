@@ -1,0 +1,50 @@
+# Juniper CIS print successfully tested signatures
+juniprint () {
+        /bin/grep -B1 "Checked Fail Remediation Success" $JUNOS_PATH/$1 | /bin/grep "Juniper ->"
+}
+
+# Palo Alto CIS print successfully tested signatures
+paloprint () {
+        /bin/grep -B1 "Checked Fail Remediation Success" $PALO_PATH/$1 | /bin/grep "PaloAlto ->"
+}
+
+# Juniper CIS print all signatures
+junicat () {
+        /bin/grep "Juniper ->" $JUNOS_PATH/$1
+}
+
+# Palo Alto CIS print all signatures
+palocat () {
+        /bin/grep "PaloAlto ->" $PALO_PATH/$1
+}
+
+# Juniper CIS get ALL signature names and create filter for backbox search (from review file)
+afilter () {
+        junicat $1 | awk '{print $5}' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
+        junicat $1 | wc -l
+}
+
+# Juniper CIS get ALL signature names and create exclusive filter
+bfilter () {
+        junicat $1 | awk '{print $3,$4,$5}' | sed 's/ /./g' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
+        junicat $1 | wc -l
+}
+
+# Palo Alto CIS get ALL signature names and create exclusive filter
+pfilter () {
+        palocat $1 | awk '{print $3,$4,$5}' | sed 's/ /./g' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
+        palocat $1 | wc -l
+}
+
+# Juniper CIS get REVIEWED signature names and create filter for backbox search (from review file)
+cfilter () {
+        /bin/grep -B1 "Checked" $JUNOS_PATH/$1 | /bin/grep "Juniper ->" | awk '{print $3,$4,$5}' | sed 's/ /./g' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
+        /bin/grep -B1 "Checked" $JUNOS_PATH/$1 | /bin/grep "Juniper ->" | wc -l
+}
+
+# Search reworked signature's past comments
+rsearch () {
+        grep -A2 -r "$1" $JUNOS_PATH/*.reply
+}
+
+# Build a mail to send to Nasirhussen
