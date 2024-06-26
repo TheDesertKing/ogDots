@@ -1,3 +1,8 @@
+# BACKBOX CUSTOMIZATION:
+
+JUNOS_PATH=/home/amitz/lab/calsoft/junos_cis
+PALO_PATH=/home/amitz/lab/calsoft/paloalto_cis
+
 # Juniper CIS print successfully tested signatures
 juniprint () {
         /bin/grep -B1 "Checked Fail Remediation Success" $JUNOS_PATH/$1 | /bin/grep "Juniper ->"

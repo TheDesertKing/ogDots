@@ -158,11 +158,6 @@ alias icyget="icy;./icyget.py"
 alias icyset="icy;./icyset.py"
 alias icyopen="icy;./icyopen.py"
 
-# BACKBOX CUSTOMIZATION:
-
-JUNOS_PATH=/home/amitz/lab/calsoft/junos_cis
-PALO_PATH=/home/amitz/lab/calsoft/paloalto_cis
-
 # Edit Checking files with Review files
 vimr () {
         vim -c ":split ${1}reply" ${1}"k"
