@@ -122,8 +122,8 @@ autocmd FileType python imap <buffer> <F2> <esc>:w<CR>:exec '!clear; python3 %'<
 autocmd FileType c map <buffer> <F2> :w<CR>:exec '!clear; gcc % -o %:r; ./%:r'<CR>
 autocmd FileType c imap <buffer> <F2> <esc>:w<CR>:exec '!clear; gcc % -o %:r; ./%:r'<CR>
 
-map <F9> :exec '!clear; cat ''%'''<CR>
-imap <F9> <esc>:exec '!clear; cat ''%'''<CR>
+map <F9> :exec '!clear; less ''%'''<CR>
+imap <F9> <esc>:exec '!clear; less ''%'''<CR>
 
 " Vim Terminator
 let g:terminator_runfile_map = {
