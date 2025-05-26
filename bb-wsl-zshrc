@@ -70,7 +70,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+        git
+        zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -108,20 +111,32 @@ zshconfig () {
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias cd..="cd .."
 alias vimrc="vim ~/.vimrc"
+alias vimdir="cd ~/.vim"
 alias py="python3"
 #alias pip="pip.exe"
 alias expl="explorer.exe ."
-alias ipy="ipython3.exe"
+alias ipy="ipython"
 alias bat="batcat"
 alias la="ls -A"
 alias ip="ip -c=auto"
 #alias tmux="TERM=xterm-256color tmux"
 alias tmux="TERM=screen-256color-bce tmux"
-alias tmp="cd ~/lab/tmp"
-alias junos="cd ~/lab/calsoft/junos_cis"
 alias thoughts="cd ~/lab/self;vim thoughts.th"
-alias palo="cd ~/lab/calsoft/paloalto_cis"
+alias tasks="cd ~/lab/self;vim tasks.th"
+alias goodmorning="cd ~/lab/self;vim good_morning"
 alias getGitAuth="cat ~/.GitAuthToken | clipcopy"
+alias mv="mv -i"
+
+
+
+alias tmp="cd ~/lab/tmp"
+alias downloads="cd /mnt/c/Users/admin/Downloads"
+
+alias urlencode="clippaste | sed 's/.$//' | ~/lab/urlencode.py | clipcopy"
+
+#Device specific
+alias gettoken104="~/lab/scripts/getPaloToken.sh"
+#DEPRECATED
 
 export PATH=/home/amitz/.local/bin:$PATH
 
@@ -133,71 +148,53 @@ exp () {
         explorer.exe .
 }
 
-# BACKBOX CUSTOMIZATION:
-
-JUNOS_PATH=/home/amitz/lab/calsoft/junos_cis
-PALO_PATH=/home/amitz/lab/calsoft/paloalto_cis
-
-# Juniper CIS print successfully tested signatures
-juniprint () {
-        /bin/grep -B1 "Checked Fail Remediation Success" $JUNOS_PATH/$1 | /bin/grep "Juniper ->"
-}
-
-# Palo Alto CIS print successfully tested signatures
-paloprint () {
-        /bin/grep -B1 "Checked Fail Remediation Success" $PALO_PATH/$1 | /bin/grep "PaloAlto ->"
-}
-
-# Juniper CIS print all signatures
-junicat () {
-        /bin/grep "Juniper ->" $JUNOS_PATH/$1
-}
-
-# Palo Alto CIS print all signatures
-palocat () {
-        /bin/grep "PaloAlto ->" $PALO_PATH/$1
-}
-
-# Juniper CIS get ALL signature names and create filter for backbox search (from review file)
-afilter () {
-        junicat $1 | awk '{print $5}' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
-        junicat $1 | wc -l
-}
-
-# Juniper CIS get ALL signature names and create exclusive filter
-bfilter () {
-        junicat $1 | awk '{print $3,$4,$5}' | sed 's/ /./g' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
-        junicat $1 | wc -l
-}
-
-# Palo Alto CIS get ALL signature names and create exclusive filter
-pfilter () {
-        palocat $1 | awk '{print $3,$4,$5}' | sed 's/ /./g' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
-        palocat $1 | wc -l
-}
-
-# Juniper CIS get REVIEWED signature names and create filter for backbox search (from review file)
-cfilter () {
-        /bin/grep -B1 "Checked" $JUNOS_PATH/$1 | /bin/grep "Juniper ->" | awk '{print $3,$4,$5}' | sed 's/ /./g' | tr '\n' '\|' | sed 's/.$/\n/' | clipcopy
-        /bin/grep -B1 "Checked" $JUNOS_PATH/$1 | /bin/grep "Juniper ->" | wc -l
-}
-
-# Search reworked signature's past comments
-rsearch () {
-        grep -A2 -r "$1" $JUNOS_PATH/*.reply
-}
-
-# Build a mail to send to Nasirhussen
-report () {
-        py ~/lab/calsoft/scripts/report.py $1 $2
-        if [ "$2"=="j" ]; then
-                clipcopy ~/lab/calsoft/scripts/$1.feedback
-        elif [ "$2"=="p" ]; then
-                clipcopy ~/lab/calsoft/scripts/palo/$1.feedback
-        else echo "$2 is not an option"
+#JQ into less, allowing commands
+jqless () {
+        if [ "$#" -gt 2 ] || [ "$#" -lt 1 ]; then
+                echo "Usage: jqless JQCOMMAND JSONFILE"
+        elif [ "$#" = 2 ]; then
+                cat "$2" | jq -C "$1" | less -R
+        else
+                cat "$1" | jq -C | less -R
         fi
 }
 
+#Pretty Print XML with colors (requires pygmentize)
+ppxml () {
+        xmllint --format "$1" | pygmentize -l xml -P style=native | less
+}
+
+# Get XML path of nodes by their value (text in the node)
+elbyval () {
+        tmpx='.'
+        tmpp=''
+        for i in {1..20};do
+                tmpp=$(xmlstarlet sel -t -m "//*[text()='$1']" -v "name($tmpx)" -n response)/$tmpp
+                tmpx=$tmpx'./.'
+        done
+        tmpx='.'
+        echo $tmpp
+        tmpp=''
+}
+
+# Get XML path of nodes by their attribute and it's value
+elbyattr () {
+        tmpx='.'
+        tmpp=''
+        for i in {1..20};do
+                tmpp=$(xmlstarlet sel -t -m "//*[@$1='$2']" -v "name($tmpx)" -n response)/$tmpp
+                tmpx=$tmpx'./.'
+        done
+        tmpx='.'
+        echo $tmpp
+        tmpp=''
+}
+
+#ICYPY specific
+alias icy="cd ~/lab/ICYPY"
+alias icyget="icy;./icyget.py"
+alias icyset="icy;./icyset.py"
+alias icyopen="icy;./icyopen.py"
 
 # Edit Checking files with Review files
 vimr () {
@@ -209,4 +206,3 @@ clipd () {
         clippaste > $1
         dos2unix $1
 }
-
